@@ -1,0 +1,12 @@
+/* custom.css */
+.custom-button {
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+  
+  .custom-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
