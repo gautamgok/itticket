@@ -1,83 +1,81 @@
 import React, { useState } from "react";
 
-const Acknowledgement = () => {
-  const [formData, setFormData] = useState({
-    comment: "",
-    engineer: "",
-    estimatedPrice: "",
-  });
+const Acknowledgement = ({ tickets, isOpen, onClose }) => {
+  const [selectedTicket, setSelectedTicket] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle acknowledgement submission
-    console.log("Complaint acknowledged", formData);
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-2xl font-semibold mb-6">Acknowledge Complaint</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Engineer</label>
-          <select
-            name="engineer"
-            value={formData.engineer}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-          >
-            <option value="">Select Engineer</option>
-            <option value="John Doe">John Doe</option>
-            <option value="Jane Smith">Jane Smith</option>
-          </select>
-        </div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-xl font-bold mb-4">Acknowledge Ticket</h2>
+        <form>
+          {/* Dropdown for selecting a ticket */}
+          <div className="mb-4">
+            <label htmlFor="ticket" className="block text-sm font-medium text-gray-700">
+              Select Ticket
+            </label>
+            <select
+              id="ticket"
+              value={selectedTicket}
+              onChange={(e) => setSelectedTicket(e.target.value)}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">-- Select Pending Ticket --</option>
+              {tickets.map((ticket) => (
+                <option key={ticket.id} value={ticket.id}>
+                  {ticket.type} (Date: {ticket.date})
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Comment</label>
-          <textarea
-            name="comment"
-            value={formData.comment}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            placeholder="Add a comment"
-          />
-        </div>
+          {/* Comment Input */}
+          <div className="mb-4">
+            <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
+              Comment
+            </label>
+            <textarea
+              id="comment"
+              rows="3"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Add your comments here..."
+            ></textarea>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Estimated Price</label>
-          <input
-            type="number"
-            name="estimatedPrice"
-            value={formData.estimatedPrice}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            placeholder="Enter estimated price"
-          />
-        </div>
+          {/* Engineer Assignment */}
+          <div className="mb-4">
+            <label htmlFor="engineer" className="block text-sm font-medium text-gray-700">
+              Assign Engineer
+            </label>
+            <select
+              id="engineer"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">-- Select Engineer --</option>
+              <option value="John Doe">John Doe</option>
+              <option value="Jane Smith">Jane Smith</option>
+            </select>
+          </div>
 
-        <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={() => console.log("Cancelled")}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg"
-          >
-            Submit Acknowledgement
-          </button>
-        </div>
-      </form>
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

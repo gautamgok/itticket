@@ -4,8 +4,7 @@ const routes = {
     login: "/login",
     admin: "/admin",
     engineer: "/engineer",
-    complaintRegister: "/complaint-register",
-    acknowledgement: "/acknowledgement",
+    client: "/client",
   };
   
   export default routes;
